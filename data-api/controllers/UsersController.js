@@ -27,10 +27,10 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res) => {
   //
   try {
-    const users = await User.findAll()
-    res.json(users)
+    const users = await User.findAll();
+    res.json(users);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 };
 // Find a single User with an id
