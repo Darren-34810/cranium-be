@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "cranium_westcon_development",
+    "database": "database_development",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
@@ -16,7 +16,7 @@
   "production": {
     "username": "root",
     "password": null,
-    "database": "cranium_westcon_production",
+    "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
