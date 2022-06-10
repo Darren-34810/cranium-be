@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import westconRoutes from './routes/UserWestconRoutes.js'
+import route from './src/routes/index.js'
 
 dotenv.config();
 
@@ -16,8 +16,7 @@ app.use(cors({
 app.use(express.json());  // Parsing body in the request as JSON Object
 // app.use(express.urlencoded({ extended: true }));  // Parsing Requst Object as string / arrays
 
-app.use('/westcon', westconRoutes);
-
+route(app);
 
 app.listen(4000, () => {
   console.log('4000 - Westcon Service');

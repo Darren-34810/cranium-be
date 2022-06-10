@@ -1,11 +1,11 @@
-'use strict';
+import fs from 'fs';
+import path from 'path';
+import Sequelize from 'sequelize';
+import enVariables from '../config/config.json';
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = enVariables[env];
 const db = {};
 
 let sequelize;
@@ -17,11 +17,10 @@ if (config.use_env_variable) {
 
 fs
   .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
+  .filter(file => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
   .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    // eslint-disable-next-line global-require,import/no-dynamic-require
+    const model = require(path.join(__dirname, file)).default(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
 
@@ -34,4 +33,4 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;
