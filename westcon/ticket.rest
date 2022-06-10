@@ -3,8 +3,20 @@ Content-Type: application/json
 
 {
   "name": "Rucci",
-  "email": "rucci@gmail.com",
+  "email": "d.rucci.2001@gmail.com",
   "phoneNumber": "08123456789",
   "ticket": "T-123",
+  "notify": false
+}
+
+###
+POST http://localhost:4000/api/westcon/create-ticket
+Content-Type: application/json
+
+{
+  "name": "Mamank",
+  "email": "mamank@gmail.com",
+  "phoneNumber": "089536",
+  "ticket": "T-409",
   "notify": false
 }

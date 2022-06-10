@@ -12,11 +12,11 @@ export async function up(queryInterface, Sequelize) {
     },
     email: {
       type: Sequelize.STRING,
-      unique: true
+      // unique: true
     },
     phoneNumber: {
       type: Sequelize.STRING,
-      unique: true
+      // unique: true
     },
     ticket: {
       type: Sequelize.STRING
