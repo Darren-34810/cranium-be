@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "db_migration",
+    "database": "cranium_development",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
