@@ -1,1 +1,11 @@
 POST http://localhost:4001/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "Le",
+  "lastName": "Rucci",
+  "phoneNumber": "123456789",
+  "email": "rucci@gmail.com",
+  "password": "ruccirucci",
+  "confirmationPassword": "ruccirucci"
+}

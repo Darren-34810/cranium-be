@@ -5,6 +5,7 @@ import jsonwebtoken from "jsonwebtoken";
 
 export const register = (req, res) => {
   console.log(req.body);
+  // return res.send(req.body);
   axios.post(`${Ports.user}/api/user`, req.body)
     .then(response => {
       console.log(response.data);
@@ -58,13 +59,14 @@ export const login = async (req, res) => {
     { id, firstName, lastName, email },
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: '1d' }
+    // { expiresIn: '4m' }
   );
 
   try {
     const response = await axios.patch(`${Ports.user}/api/user/refreshToken/${email}`, {
       refreshToken: refreshToken
     });
-    console.log(response);
+    console.log(response.data);
 
   } catch (err) {
     console.log(err);
@@ -78,7 +80,8 @@ export const login = async (req, res) => {
   res
     .cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000,  // 1 days
+      // maxAge: 4 * 1000,  // 4 mins
       // secure: true // Ketika https
     })
     .json({ accessToken });
@@ -88,6 +91,7 @@ export const logout = (req, res) => {
   // const refreshToken = req.cookies.refreshToken;
   // if (!refreshToken) console.log("Refresh Token gak ada");
   // console.log(refreshToken);
+  console.log('logout');
   res.clearCookie('refreshToken');
   return res.sendStatus(200);
 }
@@ -95,6 +99,32 @@ export const logout = (req, res) => {
 export const refreshToken = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
   console.log(refreshToken);
-  if(!refreshToken) return res.status(401);
+  if(!refreshToken) return res.status(401);// .send({message: "Unauthorized"});
+
+  jsonwebtoken.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decode) => {
+    console.log(err);
+    console.log(decode);
+    if (err) return res.sendStatus(403);
+
+    try {
+      const user = await axios.get(`${Ports.user}/api/user/getUsersByRefreshToken/${refreshToken}`);
+      if (!user.data.length) return res.sendStatus(403);
+      
+      console.log(user.data);
+      const {id, firstName, lastName, email} = user.data;
+      const accessToken = jsonwebtoken.sign(
+        {id, firstName, lastName, email},
+        process.env.ACCESS_TOKEN_SECRET,
+        {expiresIn: '30s'}
+      );
+      return res.send(accessToken);
+    } catch(err) {
+      console.log(err.data);
+    }
+
+  });
+
+  
+  
   // const user = await axios.
 }
