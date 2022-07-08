@@ -52,7 +52,7 @@ export const login = async (req, res) => {
   const accessToken = jsonwebtoken.sign(
     { id, firstName, lastName, email },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: '30s' }
+    { expiresIn: '5s' }
   );
 
   const refreshToken = jsonwebtoken.sign(
@@ -115,7 +115,7 @@ export const refreshToken = async (req, res) => {
       const accessToken = jsonwebtoken.sign(
         {id, firstName, lastName, email},
         process.env.ACCESS_TOKEN_SECRET,
-        {expiresIn: '30s'}
+        {expiresIn: '10s'}
       );
       return res.send(accessToken);
     } catch(err) {
