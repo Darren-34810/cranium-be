@@ -47,7 +47,7 @@ export const login = async (req, res) => {
   const { id, firstName, lastName, email } = user.data;
   // Check password from client with password database
   if (req.body.password !== user.data.password)
-    return res.status(400).json({ message: 'Wrong Password' });
+    return res.status(403).json({ message: 'Wrong Password' }); // Forbidden
 
   const accessToken = jsonwebtoken.sign(
     { id, firstName, lastName, email },
