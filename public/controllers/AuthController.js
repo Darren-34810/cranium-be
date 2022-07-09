@@ -107,7 +107,7 @@ export const refreshToken = async (req, res) => {
     if (err) return res.sendStatus(403);
 
     try {
-      const user = await axios.get(`${Ports.user}/api/user/getUsersByRefreshToken/${refreshToken}`);
+      const user = await axios.get(`${Ports.user}/api/user/findUsers/${refreshToken}`);
       if (!user.data.length) return res.sendStatus(403);
       
       console.log(user.data);
